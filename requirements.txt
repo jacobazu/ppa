@@ -1,0 +1,5 @@
+entsoe-py
+matplotlib
+numpy
+pandas
+requests
