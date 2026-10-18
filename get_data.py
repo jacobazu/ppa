@@ -1,4 +1,4 @@
-# day-ahead prices, solar and onshore wind production and installed capacity from entso-e, 2019 to now,
+# day-ahead prices and solar and onshore wind production from entso-e, 2019 to now,
 # and dk1's yearly average price since 2000 from energi data service
 # needs an entso-e token in the environment variable ENTSOE_TOKEN
 
@@ -34,7 +34,7 @@ def saved(name, fetch):
     return pd.read_csv(path, index_col=0, parse_dates=True)
 
 
-prices, prod, cap = {}, [], []
+prices, prod = {}, []
 for area, a in AREAS.items():
     print(area)
     p = saved(f"prices_{area}", lambda: client.query_day_ahead_prices(a["price"], start=START, end=END).rename("price"))
@@ -58,11 +58,6 @@ for area, a in AREAS.items():
     g = g[~g.index.duplicated()].rename(columns={v: k for k, v in TECH.items()})
     prod.append(g.assign(area=area))
 
-    c = saved(f"capacity_{area}", lambda: actual(client.query_installed_generation_capacity(
-        a["gen"], start=START, end=END + pd.offsets.YearEnd())).reindex(columns=list(TECH.values())))
-    c.index = pd.to_datetime(c.index, utc=True).tz_convert(a["tz"]).year
-    c = c.rename(columns={v: f"{k}_mw" for k, v in TECH.items()})
-    cap.append(c.assign(area=area))
 
 prices = pd.DataFrame(prices)
 prices.index.name = "time"
@@ -70,9 +65,6 @@ prices.to_csv("data/prices.csv")
 prod = pd.concat(prod)
 prod.index.name = "time"
 prod.to_csv("data/production.csv")
-cap = pd.concat(cap)
-cap.index.name = "year"
-cap.to_csv("data/capacity.csv")
 
 for _ in range(10):
     r = requests.get("https://api.energidataservice.dk/dataset/Elspotprices", timeout=300, params={
@@ -92,4 +84,3 @@ dk1.to_csv("data/dk1_yearly.csv")
 
 print(prices.describe().round(1))
 print(prod.groupby("area")[list(TECH)].count())
-print(cap)

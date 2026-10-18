@@ -1,0 +1,11 @@
+case,tech,price_level,capture_rate,output_lost_negative
+DK1,solar,104.3505,0.7875,0.1009
+DK1,onshore,104.3505,0.8118,0.054
+SE3,solar,67.1177,0.742,0.1077
+SE3,onshore,67.1177,0.8838,0.0867
+FI,solar,54.8524,0.9635,0.0814
+FI,onshore,54.8524,0.7139,0.0876
+DE,solar,107.1375,0.7809,0.1696
+DE,onshore,107.1375,0.9024,0.0656
+DK1 (SOEB25),solar,67.2922,0.7875,0.1009
+DK1 (SOEB25),onshore,67.2922,0.8118,0.054

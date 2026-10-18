@@ -1,4 +1,5 @@
-# fair fixed price and risk of a 10-year ppa for a 50 mw solar park and a 50 mw onshore wind farm in each area
+# fair fixed price and risk of a 10-year ppa for a solar park and an onshore wind farm in each area,
+# each producing 100 gwh in an average weather year
 # pay-as-produced: the buyer takes all the power. baseload: the park delivers a flat volume and buys any shortfall
 # the park stops when the day-ahead price is negative, and the buyer doesn't pay for those hours
 
@@ -13,7 +14,7 @@ import matplotlib.pyplot as plt
 
 from areas import AREAS, TECH
 
-MW = 50
+VOLUME = 100_000                 # mwh a year in an average weather year
 YEARS = np.arange(2027, 2037)
 RATE = 0.035                     # finansministeriet's discount rate, years 0-35 (noegletal, feb 2026)
 PATTERN_YEARS = [2023, 2024, 2025]
@@ -63,18 +64,17 @@ for case, level in cases.items():
     price = level * shock
     for t in TECH:
         w = volume[f"{area}_{t}"].dropna().to_numpy()
-        if f"{t}_cf" not in pat or pat[f"{t}_cf"].isna().any() or len(w) == 0:
+        if f"{t}_rate_stop" not in pat or pat[f"{t}_rate_stop"].isna().any() or len(w) == 0:
             print(f"{case} {t}: missing data, skipped")
             continue
-        cf = pat[f"{t}_cf"].mean() / volume.loc[PATTERN_YEARS, f"{area}_{t}"].mean()
         rate, kept = pat[f"{t}_rate_stop"].to_numpy(), 1 - pat[f"{t}_lost"].to_numpy()
-        mwh = cf * MW * h * w[weather_draw % len(w)] * kept[pick]
+        mwh = VOLUME * h / 8760 * w[weather_draw % len(w)] * kept[pick]
         merchant = price * rate[pick] * mwh
-        flat = cf * MW * kept.mean()
+        flat = VOLUME / 8760 * kept.mean()
 
         pap = pv(merchant).mean() / pv(mwh).mean()
         base = pv(price * flat * h).mean() / pv(flat * h).mean()
-        inputs.append({"case": case, "tech": t, "price_level": level.mean(), "capacity_factor": cf,
+        inputs.append({"case": case, "tech": t, "price_level": level.mean(),
                        "capture_rate": rate.mean(), "output_lost_negative": 1 - kept.mean()})
         out_prices.append({"case": case, "tech": t, "baseload_price": base, "pap_price": pap,
                            "pap_share": pap / base, "profile_discount": base - pap})

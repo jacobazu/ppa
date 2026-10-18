@@ -38,17 +38,6 @@ years.columns = [f"{a}_{t}" for t, a in years.columns]
 summary = pd.DataFrame({c: {"std": years[c].std(), "p90": years[c].quantile(0.10), "p50": years[c].median(),
                             "worst": years[c].min(), "best": years[c].max()} for c in years}).T
 
-# check: does the weather index move with what the real fleet produced per mw?
-fleet = pd.read_csv("results/capture_yearly.csv").query("hours > 8700")
-check = {}
-for c in years:
-    area, t = c.split("_")
-    f = fleet[fleet["area"] == area].set_index("year").get(f"{t}_cf")
-    if f is not None and f.notna().sum() >= 4:
-        both = pd.concat([years[c], f], axis=1, join="inner").dropna()
-        check[c] = both.corr().iloc[0, 1]
-summary["corr_with_fleet"] = pd.Series(check)
-
 Path("results").mkdir(exist_ok=True)
 years.round(4).to_csv("results/volume_years.csv")
 summary.round(4).to_csv("results/volume_summary.csv")

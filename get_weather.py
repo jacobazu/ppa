@@ -19,14 +19,19 @@ def get(lat, lon, start, end, what):
     params = {"latitude": lat, "longitude": lon, "start_date": start, "end_date": end,
               "wind_speed_unit": "ms", "timezone": "GMT", **what}
     for _ in range(80):
-        r = requests.get(API, params=params, timeout=300)
+        try:
+            r = requests.get(API, params=params, timeout=300)
+        except requests.ConnectionError:
+            print("connection dropped, trying again in a minute")
+            time.sleep(60)
+            continue
         if r.status_code == 429:  # free use is limited per minute, hour and day
             print("open-meteo limit reached, waiting a minute")
             time.sleep(60)
             continue
         r.raise_for_status()
         return r.json()
-    raise RuntimeError("open-meteo: still limited, run again later")
+    raise RuntimeError("open-meteo: still not answering, run again later")
 
 
 wind, solar = [], []
