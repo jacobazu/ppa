@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathpazo}
+\usepackage[scaled=0.9]{helvet}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs,tabularx,array}
+\usepackage[authoryear,round]{natbib}
+\usepackage{xcolor}
+\usepackage[colorlinks,linkcolor=black,citecolor=black,urlcolor={blue!60!black}]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlength{\bibsep}{0.2em}
+\renewcommand{\arraystretch}{1.25}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\pagestyle{empty}
+\begin{document}
+{\sffamily\bfseries\Large PPA pricing in four areas: methods}\par
+\href{https://github.com/jacobazu/ppa}{github.com/jacobazu/ppa} \textperiodcentered{} October 2026
+
+The fair fixed price and the risk of a 10-year PPA (2027--2036) for a solar park and an onshore wind farm in DK1, SE3, Finland and Germany, each producing 100\,GWh in an average weather year. A case study in Python.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}lL@{}}
+\toprule
+Contracts & Pay-as-produced: the buyer takes all output at a fixed price. Baseload: the park delivers its average output every hour and buys any shortfall at the day-ahead price. \\
+Capture rate & Output-weighted price over the average price, per area and year \citep{hirth2013}. The park stops when the price is negative. \\
+Price level & Exchange forward prices for each year, the last listed year held flat (the last 12 months' average where there are none); for DK1 also Energistyrelsen's outlook \citep{soeb25}. The yearly level moves as an AR(1) in logs \citep{lucia2002}, estimated on DK1's yearly prices 2000--2025 and scaled to keep the expected level. \\
+Hourly patterns & Prices and production of one of the last three 12-month periods, one drawn for each contract year, so the link between when a park produces and what power is worth is kept. \\
+Volume & 35 weather years (1991--2025) from ERA5 \citep{hersbach2020}: hourly wind at 100\,m through a Vestas V126 power curve \citep{staffell2016}, and yearly solar radiation. \\
+Fair price & The production-weighted expected price \citep{qorbanian2024}: both sides get the same expected present value, at 5.6\% (3.5\% real, \citealp{fm2026}, plus 2\% inflation). Split into the forward price, the park's profile and the price--volume covariance \citep{chatziandreou2026}. No risk premium. \\
+Risk & 20{,}000 paths. The 1 in 20 worst 10-year present value and the average below it \citep{artzner1999}, for the park and the buyer. \\
+Hedge & The baseload volume sold forward that minimises the variance of the 10-year income \citep{ederington1979}. \\
+Sensitivities & Only the last 12 months' pattern; no stop at negative prices; capture rates one point lower each year. \\
+Rules & Assumptions are set before running and listed with sources in the README. Not included: balancing costs, tariffs, subsidies, counterparty risk, and a link between windy years and low prices. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{thebibliography}{99}\small
+\bibitem[Artzner et~al.(1999)]{artzner1999} Artzner, P., Delbaen, F., Eber, J.-M. and Heath, D. (1999). Coherent measures of risk. \textit{Mathematical Finance}.
+\bibitem[Chatziandreou and Karbach(2026)]{chatziandreou2026} Chatziandreou, K. and Karbach, S. (2026). Pricing and semi-static hedging of green pay-as-produced power purchase agreements. \textit{arXiv:2607.27814}.
+\bibitem[Ederington(1979)]{ederington1979} Ederington, L. H. (1979). The hedging performance of the new futures markets. \textit{Journal of Finance}.
+\bibitem[Energistyrelsen(2026)]{soeb25} Energistyrelsen (2026). \textit{Samfundsøkonomiske beregningsforudsætninger for energipriser og emissioner 2025}, table 7.
+\bibitem[Finansministeriet(2026)]{fm2026} Finansministeriet (2026). \textit{Nøgletal}, February 2026.
+\bibitem[Hersbach et~al.(2020)]{hersbach2020} Hersbach, H. et~al. (2020). The ERA5 global reanalysis. \textit{Quarterly Journal of the Royal Meteorological Society}.
+\bibitem[Hirth(2013)]{hirth2013} Hirth, L. (2013). The market value of variable renewables. \textit{Energy Economics}.
+\bibitem[Lucia and Schwartz(2002)]{lucia2002} Lucia, J. J. and Schwartz, E. S. (2002). Electricity prices and power derivatives: evidence from the Nordic Power Exchange. \textit{Review of Derivatives Research}.
+\bibitem[Qorbanian et~al.(2024)]{qorbanian2024} Qorbanian, R., Löhndorf, N. and Wozabal, D. (2024). Valuation of power purchase agreements for corporate renewable energy procurement. \textit{arXiv:2403.08846}.
+\bibitem[Staffell and Pfenninger(2016)]{staffell2016} Staffell, I. and Pfenninger, S. (2016). Using bias-corrected reanalysis to simulate current and future wind power output. \textit{Energy}.
+\end{thebibliography}
+\end{document}
