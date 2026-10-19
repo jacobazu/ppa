@@ -1,6 +1,5 @@
 # day-ahead prices and solar and onshore wind production from entso-e, 2019 to now,
 # and dk1's yearly average price since 2000 from energi data service
-# needs an entso-e token in the environment variable ENTSOE_TOKEN
 
 import os
 import time
