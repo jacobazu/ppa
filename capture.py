@@ -1,56 +1,43 @@
-# what solar and onshore wind earned per mwh in each area and year
-# capture rate = output-weighted price / average price. "_stop" = the park stops when the price is negative
+# what solar and onshore wind earned per mwh, per year and over the last three 12-month periods
+# capture rate = output-weighted price / average price. the park stops when the price is negative
 
 from pathlib import Path
 
-import matplotlib
 import pandas as pd
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
 from areas import AREAS, TECH
+
+
+def capture(g, row):
+    row.update(hours=len(g), baseload=g["price"].mean(), negative_hours=(g["price"] < 0).mean())
+    for t in TECH:
+        q = g[t].dropna()
+        if q.sum() <= 0 or len(q) < 0.95 * len(g):  # missing production
+            continue
+        p = g.loc[q.index, "price"]
+        on = p >= 0
+        row[f"{t}_rate"] = (p * q).sum() / q.sum() / g["price"].mean()
+        row[f"{t}_rate_stop"] = (p * q)[on].sum() / q[on].sum() / g["price"].mean()
+        row[f"{t}_lost"] = q[~on].sum() / q.sum()
+    return row
+
 
 prices = pd.read_csv("data/prices.csv", index_col="time", parse_dates=True)
 prod = pd.read_csv("data/production.csv", index_col="time", parse_dates=True)
 
-rows = []
+years, windows = [], []
 for area, a in AREAS.items():
     d = prod[prod["area"] == area].join(prices[area].rename("price"), how="inner").dropna(subset=["price"])
     d.index = d.index.tz_convert(a["tz"])
     for y, g in d.groupby(d.index.year):
-        row = {"area": area, "year": y, "hours": len(g), "baseload": g["price"].mean(),
-               "negative_hours": (g["price"] < 0).mean()}
-        for t in TECH:
-            q = g[t].dropna()
-            p = g.loc[q.index, "price"]
-            if q.sum() <= 0 or len(q) < 0.95 * len(g):  # skip years with missing production
-                continue
-            on = p >= 0
-            row[f"{t}_rate"] = (p * q).sum() / q.sum() / g["price"].mean()
-            row[f"{t}_rate_stop"] = (p * q)[on].sum() / q[on].sum() / g["price"].mean()
-            row[f"{t}_lost"] = q[~on].sum() / q.sum()
-        rows.append(row)
-yearly = pd.DataFrame(rows)
+        years.append(capture(g, {"area": area, "year": y}))
+    end = d.dropna().index.max()
+    for k in range(3):
+        g = d[(d.index > end - pd.DateOffset(years=k + 1)) & (d.index <= end - pd.DateOffset(years=k))]
+        windows.append(capture(g, {"area": area, "window": k + 1, "start": f"{g.index.min():%Y-%m-%d}",
+                                   "end": f"{g.index.max():%Y-%m-%d}"}))
 
 Path("results").mkdir(exist_ok=True)
-yearly.round(4).to_csv("results/capture_yearly.csv", index=False)
-
-full = yearly[yearly["hours"] > 8700]
-fig, axes = plt.subplots(1, len(TECH), figsize=(11, 4), sharey=True)
-for ax, t in zip(axes, TECH):
-    for i, area in enumerate(AREAS):
-        b = full[full["area"] == area]
-        if f"{t}_rate" in b and b[f"{t}_rate"].notna().any():
-            ax.plot(b["year"], 100 * b[f"{t}_rate"], marker="o", color=f"C{i}", label=area)
-    ax.axhline(100, color="#888888", lw=0.8)
-    ax.set_title(t)
-    ax.spines[["top", "right"]].set_visible(False)
-axes[0].set_ylabel("% of the average price")
-axes[-1].legend(frameon=False, loc="upper left", bbox_to_anchor=(1, 1))
-fig.suptitle("Capture rate: what the fleet earned per MWh, full years")
-fig.tight_layout()
-Path("charts").mkdir(exist_ok=True)
-fig.savefig("charts/capture.png", dpi=150)
-
-print(full.set_index(["area", "year"]).round(3).to_string())
+pd.DataFrame(years).round(4).to_csv("results/capture_yearly.csv", index=False)
+pd.DataFrame(windows).round(4).to_csv("results/capture_windows.csv", index=False)
+print(pd.DataFrame(windows).set_index(["area", "window"]).round(3).to_string())
