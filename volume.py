@@ -3,14 +3,8 @@
 
 from pathlib import Path
 
-import matplotlib
 import numpy as np
 import pandas as pd
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
-from areas import AREAS
 
 # kw at 3.0, 3.5, ..., 12.0 m/s, full power up to 22.5 m/s (open energy database turbine library, via windpowerlib)
 SPEED = np.arange(3.0, 12.5, 0.5)
@@ -19,8 +13,7 @@ POWER = np.array([35, 101, 184, 283, 404, 550, 725, 932, 1172, 1446, 1760, 2104,
 
 
 def power_curve(v):
-    p = np.interp(v, SPEED, POWER, left=0, right=1)
-    return np.where(v > 22.5, 0, p)
+    return np.where(v > 22.5, 0, np.interp(v, SPEED, POWER, left=0, right=1))
 
 
 wind = pd.read_csv("data/weather_wind.csv.gz", parse_dates=["time"])
@@ -32,28 +25,12 @@ solar = solar.groupby(["area", "site", solar["date"].dt.year])["radiation"].sum(
 solar = solar.unstack("area")
 
 years = pd.concat({"onshore": wind / wind.mean(), "solar": solar / solar.mean()}, axis=1)
-years.index.name = "year"
 years.columns = [f"{a}_{t}" for t, a in years.columns]
-
+years.index.name = "year"
 summary = pd.DataFrame({c: {"std": years[c].std(), "p90": years[c].quantile(0.10), "p50": years[c].median(),
                             "worst": years[c].min(), "best": years[c].max()} for c in years}).T
 
 Path("results").mkdir(exist_ok=True)
 years.round(4).to_csv("results/volume_years.csv")
-summary.round(4).to_csv("results/volume_summary.csv")
-
-fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)
-for ax, t in zip(axes, ["solar", "onshore"]):
-    for i, area in enumerate(AREAS):
-        ax.plot(years.index, 100 * (years[f"{area}_{t}"] - 1), lw=1.2, color=f"C{i}", label=area)
-    ax.axhline(0, color="#888888", lw=0.8)
-    ax.set_title(t)
-    ax.spines[["top", "right"]].set_visible(False)
-axes[0].set_ylabel("% more or less than an average year")
-axes[-1].legend(frameon=False, loc="upper left", bbox_to_anchor=(1, 1))
-fig.suptitle(f"Production in each weather year, {years.index.min()}-{years.index.max()}")
-fig.tight_layout()
-Path("charts").mkdir(exist_ok=True)
-fig.savefig("charts/volume.png", dpi=150)
-
+summary.round(4).to_csv("results/volume_summary.csv", index_label="case")
 print(summary.round(3))
