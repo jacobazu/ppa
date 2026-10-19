@@ -1,0 +1,41 @@
+case,tech,variant,pap_price
+DK1,solar,main case,67.3371
+DK1,solar,keeps producing at negative prices,60.1763
+DK1,solar,capture rate 1 point lower each year,63.3637
+DK1,solar,only the last 12 months' pattern,67.1358
+DK1,onshore,main case,73.4816
+DK1,onshore,keeps producing at negative prices,69.7903
+DK1,onshore,capture rate 1 point lower each year,69.5083
+DK1,onshore,only the last 12 months' pattern,77.6946
+SE3,solar,main case,37.0708
+SE3,solar,keeps producing at negative prices,32.8607
+SE3,solar,capture rate 1 point lower each year,34.409
+SE3,solar,only the last 12 months' pattern,39.0833
+SE3,onshore,main case,45.8914
+SE3,onshore,keeps producing at negative prices,42.7479
+SE3,onshore,capture rate 1 point lower each year,43.2299
+SE3,onshore,only the last 12 months' pattern,43.9878
+FI,solar,main case,50.1351
+FI,solar,keeps producing at negative prices,46.5322
+FI,solar,capture rate 1 point lower each year,47.3222
+FI,solar,only the last 12 months' pattern,45.5835
+FI,onshore,main case,38.0964
+FI,onshore,keeps producing at negative prices,35.0106
+FI,onshore,capture rate 1 point lower each year,35.2834
+FI,onshore,only the last 12 months' pattern,36.0615
+DE,solar,main case,69.0459
+DE,solar,keeps producing at negative prices,50.9498
+DE,solar,capture rate 1 point lower each year,64.9924
+DE,solar,only the last 12 months' pattern,69.8173
+DE,onshore,main case,83.1068
+DE,onshore,keeps producing at negative prices,76.7466
+DE,onshore,capture rate 1 point lower each year,79.0541
+DE,onshore,only the last 12 months' pattern,83.2098
+DK1 (SOEB25),solar,main case,58.0944
+DK1 (SOEB25),solar,keeps producing at negative prices,51.9164
+DK1 (SOEB25),solar,capture rate 1 point lower each year,54.3415
+DK1 (SOEB25),solar,only the last 12 months' pattern,57.9174
+DK1 (SOEB25),onshore,main case,63.3959
+DK1 (SOEB25),onshore,keeps producing at negative prices,60.2113
+DK1 (SOEB25),onshore,capture rate 1 point lower each year,59.6433
+DK1 (SOEB25),onshore,only the last 12 months' pattern,67.0273

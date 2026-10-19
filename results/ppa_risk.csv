@@ -1,51 +1,51 @@
 case,tech,contract,side,mean,p5,var,es
-DK1,solar,merchant,park,61.4969,36.2543,25.2426,29.2625
-DK1,solar,pay-as-produced,park,61.4969,59.9592,1.5378,1.9231
-DK1,solar,baseload,park,61.4969,51.299,10.1979,14.3154
-DK1,solar,pay-as-produced,buyer,0.0,-25.1401,25.1401,29.1607
-DK1,solar,baseload,buyer,0.0,-31.9016,31.9016,36.9044
-DK1,onshore,merchant,park,66.5779,39.2222,27.3557,31.6042
-DK1,onshore,pay-as-produced,park,66.5779,64.2865,2.2915,2.8928
-DK1,onshore,baseload,park,66.5779,57.3937,9.1843,12.9258
-DK1,onshore,pay-as-produced,buyer,0.0,-27.2431,27.2431,31.5468
-DK1,onshore,baseload,buyer,0.0,-33.5657,33.5657,38.8295
-SE3,solar,merchant,park,37.0326,21.7759,15.2567,17.6801
-SE3,solar,pay-as-produced,park,37.0326,36.0618,0.9708,1.2075
-SE3,solar,baseload,park,37.0326,29.051,7.9815,11.1563
-SE3,solar,pay-as-produced,buyer,0.0,-15.147,15.147,17.5992
-SE3,solar,baseload,buyer,-0.0,-20.3653,20.3653,23.5589
-SE3,onshore,merchant,park,44.9178,26.454,18.4638,21.3564
-SE3,onshore,pay-as-produced,park,44.9178,42.6153,2.3024,2.8905
-SE3,onshore,baseload,park,44.9178,40.4142,4.5036,6.3806
-SE3,onshore,pay-as-produced,buyer,0.0,-18.4546,18.4546,21.4133
-SE3,onshore,baseload,buyer,0.0,-20.8438,20.8438,24.1125
-FI,solar,merchant,park,40.3317,23.8688,16.4629,19.116
-FI,solar,pay-as-produced,park,40.3317,39.3925,0.9392,1.16
-FI,solar,baseload,park,40.3317,38.8497,1.482,2.1092
-FI,solar,pay-as-produced,buyer,-0.0,-16.4984,16.4984,19.1197
-FI,solar,baseload,buyer,-0.0,-17.1342,17.1342,19.8212
-FI,onshore,merchant,park,29.643,17.4604,12.1826,14.1729
-FI,onshore,pay-as-produced,park,29.643,28.1496,1.4934,1.8375
-FI,onshore,baseload,park,29.643,22.2254,7.4177,10.3413
-FI,onshore,pay-as-produced,buyer,-0.0,-12.264,12.264,14.2083
-FI,onshore,baseload,buyer,-0.0,-17.0173,17.0173,19.6859
-DE,solar,merchant,park,58.012,33.9701,24.0419,27.788
-DE,solar,pay-as-produced,park,58.012,55.2971,2.715,3.3301
-DE,solar,baseload,park,58.012,47.1911,10.821,15.1948
-DE,solar,pay-as-produced,buyer,-0.0,-23.7202,23.7202,27.5572
-DE,solar,baseload,buyer,0.0,-30.2508,30.2508,34.9947
-DE,onshore,merchant,park,75.0368,44.2191,30.8177,35.6543
-DE,onshore,pay-as-produced,park,75.0368,72.2413,2.7956,3.5
-DE,onshore,baseload,park,75.0368,69.21,5.8268,8.3229
-DE,onshore,pay-as-produced,buyer,0.0,-30.7267,30.7267,35.5953
-DE,onshore,baseload,buyer,0.0,-34.0421,34.0421,39.3805
-DK1 (SOEB25),solar,merchant,park,40.0875,23.7519,16.3356,18.988
-DK1 (SOEB25),solar,pay-as-produced,park,40.0875,39.0851,1.0024,1.2536
-DK1 (SOEB25),solar,baseload,park,40.0875,33.4584,6.6291,9.2438
-DK1 (SOEB25),solar,pay-as-produced,buyer,0.0,-16.2881,16.2881,18.9323
-DK1 (SOEB25),solar,baseload,buyer,-0.0,-20.6571,20.6571,23.9501
-DK1 (SOEB25),onshore,merchant,park,43.3972,25.7379,17.6593,20.5134
-DK1 (SOEB25),onshore,pay-as-produced,park,43.3972,41.9035,1.4936,1.8856
-DK1 (SOEB25),onshore,baseload,park,43.3972,37.4323,5.9649,8.3615
-DK1 (SOEB25),onshore,pay-as-produced,buyer,0.0,-17.6035,17.6035,20.4762
-DK1 (SOEB25),onshore,baseload,buyer,-0.0,-21.7347,21.7347,25.1994
+DK1,solar,merchant,park,45.6031,27.2527,18.3504,21.4163
+DK1,solar,pay-as-produced,park,45.6031,44.3665,1.2366,1.5265
+DK1,solar,baseload,park,45.6031,37.4236,8.1795,11.3122
+DK1,solar,pay-as-produced,buyer,-0.0,-18.3704,18.3704,21.3712
+DK1,solar,baseload,buyer,0.0,-24.1439,24.1439,28.0879
+DK1,onshore,merchant,park,52.6304,31.3471,21.2832,24.7963
+DK1,onshore,pay-as-produced,park,52.6304,50.7542,1.8761,2.3608
+DK1,onshore,baseload,park,52.6304,45.8458,6.7846,9.4997
+DK1,onshore,pay-as-produced,buyer,-0.0,-21.1424,21.1424,24.7282
+DK1,onshore,baseload,buyer,0.0,-25.5334,25.5334,29.7043
+SE3,solar,merchant,park,25.1289,14.9127,10.2163,11.9302
+SE3,solar,pay-as-produced,park,25.1289,24.329,0.7999,0.9816
+SE3,solar,baseload,park,25.1289,18.6589,6.47,9.0522
+SE3,solar,pay-as-produced,buyer,0.0,-10.2105,10.2105,11.8748
+SE3,solar,baseload,buyer,0.0,-14.7863,14.7863,17.2183
+SE3,onshore,merchant,park,32.2774,19.1648,13.1126,15.3196
+SE3,onshore,pay-as-produced,park,32.2774,30.5984,1.679,2.1082
+SE3,onshore,baseload,park,32.2774,28.3733,3.9041,5.4718
+SE3,onshore,pay-as-produced,buyer,0.0,-13.1285,13.1285,15.2896
+SE3,onshore,baseload,buyer,-0.0,-15.3423,15.3423,17.8657
+FI,solar,merchant,park,35.1305,20.7639,14.3666,16.6548
+FI,solar,pay-as-produced,park,35.1305,34.1055,1.025,1.2562
+FI,solar,baseload,park,35.1305,31.8859,3.2447,4.5857
+FI,solar,pay-as-produced,buyer,-0.0,-14.339,14.339,16.6942
+FI,solar,baseload,buyer,0.0,-16.1715,16.1715,18.835
+FI,onshore,merchant,park,26.6707,15.7004,10.9703,12.7361
+FI,onshore,pay-as-produced,park,26.6707,25.2513,1.4194,1.7528
+FI,onshore,baseload,park,26.6707,19.0028,7.6679,10.7373
+FI,onshore,pay-as-produced,buyer,0.0,-10.9413,10.9413,12.7326
+FI,onshore,baseload,buyer,0.0,-16.1593,16.1593,18.8208
+DE,solar,merchant,park,40.8392,24.3129,16.5262,19.2011
+DE,solar,pay-as-produced,park,40.8392,39.6832,1.1559,1.4246
+DE,solar,baseload,park,40.8392,33.2588,7.5804,10.554
+DE,solar,pay-as-produced,buyer,-0.0,-16.4348,16.4348,19.1467
+DE,solar,baseload,buyer,0.0,-21.6338,21.6338,25.1531
+DE,onshore,merchant,park,58.0463,34.5324,23.5139,27.2522
+DE,onshore,pay-as-produced,park,58.0463,55.8469,2.1994,2.7481
+DE,onshore,baseload,park,58.0463,53.8643,4.182,5.8432
+DE,onshore,pay-as-produced,buyer,0.0,-23.3076,23.3076,27.2167
+DE,onshore,baseload,buyer,0.0,-25.5488,25.5488,29.705
+DK1 (SOEB25),solar,merchant,park,39.3436,23.3926,15.9509,18.6599
+DK1 (SOEB25),solar,pay-as-produced,park,39.3436,38.2768,1.0668,1.3169
+DK1 (SOEB25),solar,baseload,park,39.3436,32.2099,7.1337,9.9222
+DK1 (SOEB25),solar,pay-as-produced,buyer,-0.0,-15.9365,15.9365,18.6212
+DK1 (SOEB25),solar,baseload,buyer,-0.0,-20.927,20.927,24.4758
+DK1 (SOEB25),onshore,merchant,park,45.4066,26.8741,18.5325,21.6018
+DK1 (SOEB25),onshore,pay-as-produced,park,45.4066,43.788,1.6186,2.0368
+DK1 (SOEB25),onshore,baseload,park,45.4066,39.5069,5.8998,8.2456
+DK1 (SOEB25),onshore,pay-as-produced,buyer,-0.0,-18.3467,18.3467,21.5382
+DK1 (SOEB25),onshore,baseload,buyer,-0.0,-22.1313,22.1313,25.8843
