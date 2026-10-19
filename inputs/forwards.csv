@@ -1,0 +1,41 @@
+trade_date,area,year,price,system,epad,source
+2026-10-16,DK1,2027,140.93,72.0,68.93,euronext system price 2027 + DK1 epad 2027
+2026-10-16,DK1,2028,103.41,56.6,46.81,euronext system price 2028 + DK1 epad 2028
+2026-10-16,DK1,2029,92.31,52.25,40.06,euronext system price 2029 + DK1 epad 2029
+2026-10-16,DK1,2030,83.0,,,eex german cal-30 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2031,75.46,,,eex german cal-31 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2032,73.33,,,eex german cal-32 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2033,73.33,,,eex german cal-33 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2034,73.58,,,eex german cal-34 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2035,73.83,,,eex german cal-35 + dk1-de spread of 2029 (-1.29)
+2026-10-16,DK1,2036,74.08,,,eex german cal-36 + dk1-de spread of 2029 (-1.29)
+2026-10-16,SE3,2027,66.09,72.0,-5.91,euronext system price 2027 + SE3 epad 2027
+2026-10-16,SE3,2028,52.59,56.6,-4.01,euronext system price 2028 + SE3 epad 2028
+2026-10-16,SE3,2029,50.58,52.25,-1.67,euronext system price 2029 + SE3 epad 2029
+2026-10-16,SE3,2030,52.6,52.4,0.2,euronext system price 2030 + SE3 epad 2030
+2026-10-16,SE3,2031,52.7,52.5,0.2,euronext system price 2031 + SE3 epad 2030
+2026-10-16,SE3,2032,52.15,51.95,0.2,euronext system price 2032 + SE3 epad 2030
+2026-10-16,SE3,2033,52.45,52.25,0.2,euronext system price 2033 + SE3 epad 2030
+2026-10-16,SE3,2034,52.7,52.5,0.2,euronext system price 2034 + SE3 epad 2030
+2026-10-16,SE3,2035,52.95,52.75,0.2,euronext system price 2035 + SE3 epad 2030
+2026-10-16,SE3,2036,53.2,53.0,0.2,euronext system price 2036 + SE3 epad 2030
+2026-10-16,FI,2027,65.1,72.0,-6.9,euronext system price 2027 + FI epad 2027
+2026-10-16,FI,2028,58.95,56.6,2.35,euronext system price 2028 + FI epad 2028
+2026-10-16,FI,2029,55.91,52.25,3.66,euronext system price 2029 + FI epad 2029
+2026-10-16,FI,2030,55.36,52.4,2.96,euronext system price 2030 + FI epad 2030
+2026-10-16,FI,2031,55.46,52.5,2.96,euronext system price 2031 + FI epad 2030
+2026-10-16,FI,2032,54.91,51.95,2.96,euronext system price 2032 + FI epad 2030
+2026-10-16,FI,2033,55.21,52.25,2.96,euronext system price 2033 + FI epad 2030
+2026-10-16,FI,2034,55.46,52.5,2.96,euronext system price 2034 + FI epad 2030
+2026-10-16,FI,2035,55.71,52.75,2.96,euronext system price 2035 + FI epad 2030
+2026-10-16,FI,2036,55.96,53.0,2.96,euronext system price 2036 + FI epad 2030
+2026-10-16,DE,2027,146.37,,,eex german base year future cal-27
+2026-10-16,DE,2028,108.65,,,eex german base year future cal-28
+2026-10-16,DE,2029,93.6,,,eex german base year future cal-29
+2026-10-16,DE,2030,84.29,,,eex german base year future cal-30
+2026-10-16,DE,2031,76.75,,,eex german base year future cal-31
+2026-10-16,DE,2032,74.62,,,eex german base year future cal-32
+2026-10-16,DE,2033,74.62,,,eex german base year future cal-33
+2026-10-16,DE,2034,74.87,,,eex german base year future cal-34
+2026-10-16,DE,2035,75.12,,,eex german base year future cal-35
+2026-10-16,DE,2036,75.37,,,eex german base year future cal-36
