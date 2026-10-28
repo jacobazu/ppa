@@ -37,7 +37,22 @@ for area, a in AREAS.items():
         windows.append(capture(g, {"area": area, "window": k + 1, "start": f"{g.index.min():%Y-%m-%d}",
                                    "end": f"{g.index.max():%Y-%m-%d}"}))
 
+# dk1 in the last 12 months, to show why: the price and output over an average day, and the price by how much
+# solar or wind was producing (as a share of that year's highest hour)
+d = prod[prod["area"] == "DK1"].join(prices["DK1"].rename("price"), how="inner").dropna(subset=["price"])
+d.index = d.index.tz_convert(AREAS["DK1"]["tz"])
+d = d[d.index > d.dropna().index.max() - pd.DateOffset(years=1)]
+profile = d.groupby(d.index.hour)[["price", *TECH]].mean().rename_axis("hour")
+bins = []
+for t in TECH:
+    share = d[t] / d[t].max()
+    g = d.groupby(pd.cut(share, [-0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0]), observed=True)["price"]
+    bins += [{"tech": t, "output_from": k.left if k.left > 0 else 0, "output_to": k.right, "hours": len(v),
+              "price": v.mean()} for k, v in g]
+
 Path("results").mkdir(exist_ok=True)
+profile.round(2).to_csv("results/capture_profile.csv")
+pd.DataFrame(bins).round(3).to_csv("results/capture_bins.csv", index=False)
 pd.DataFrame(years).round(4).to_csv("results/capture_yearly.csv", index=False)
 pd.DataFrame(windows).round(4).to_csv("results/capture_windows.csv", index=False)
 print(pd.DataFrame(windows).set_index(["area", "window"]).round(3).to_string())

@@ -25,6 +25,8 @@ sens = pd.read_csv("results/ppa_sensitivity.csv")
 sample = pd.read_csv("results/ppa_dk1_sample.csv")
 yearly = pd.read_csv("results/capture_yearly.csv")
 windows = pd.read_csv("results/capture_windows.csv")
+profile = pd.read_csv("results/capture_profile.csv")
+bins = pd.read_csv("results/capture_bins.csv")
 volume = pd.read_csv("results/volume_summary.csv", index_col="case")
 pl = pd.read_csv("results/price_level.csv", index_col="name")["value"]
 fwd = pd.read_csv("inputs/forwards.csv")
@@ -93,6 +95,32 @@ for a in AREAS:
                              line=dict(color=AREA_COLOR[a], width=2.5)))
 fig.update_yaxes(ticksuffix=" €")
 forward_chart = chart(fig)
+
+# dk1, last 12 months: an average day, and the price by how much solar or wind was producing
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=profile["hour"], y=profile["solar"], name="Solar output", yaxis="y2", mode="lines",
+                         line=dict(color=SOLAR, width=0, shape="spline"), fill="tozeroy",
+                         fillcolor="rgba(245,158,11,0.3)", hovertemplate="%{y:.0f} MW"))
+fig.add_trace(go.Scatter(x=profile["hour"], y=profile["onshore"], name="Onshore wind output", yaxis="y2",
+                         mode="lines", line=dict(color=WIND, width=2.5, shape="spline", dash="dot"),
+                         hovertemplate="%{y:.0f} MW"))
+fig.add_trace(go.Scatter(x=profile["hour"], y=profile["price"], name="Price", mode="lines",
+                         line=dict(color=INK, width=3, shape="spline"), hovertemplate="%{y:.0f} €/MWh"))
+fig.update_layout(yaxis=dict(ticksuffix=" €", rangemode="tozero"),
+                  yaxis2=dict(overlaying="y", side="right", showgrid=False, ticksuffix=" MW", rangemode="tozero",
+                              tickmode="auto", nticks=4))
+fig.update_xaxes(tickvals=list(range(0, 24, 3)), ticktext=[f"{x:02d}:00" for x in range(0, 24, 3)])
+day_chart = chart(fig, 320)
+
+fig = go.Figure()
+for t, color in [("solar", SOLAR), ("onshore", WIND)]:
+    b = bins[bins["tech"] == t]
+    fig.add_trace(go.Scatter(x=[f"{100 * a:.0f}-{z:.0%}" for a, z in zip(b["output_from"], b["output_to"])], y=b["price"],
+                             name=TECH[t], mode="lines+markers", line=dict(color=color, width=3),
+                             hovertemplate="%{y:.0f} €/MWh"))
+fig.add_hline(y=win("DK1", 1, "baseload"), line=dict(color=GREY, dash="dot"))
+fig.update_yaxes(ticksuffix=" €", rangemode="tozero")
+bin_chart = chart(fig, 320)
 
 cap_charts = {}
 for t in TECH:
@@ -239,6 +267,20 @@ above Germany for the whole 2030s, which I don't believe.</p>
 €/MWh in nominal terms, well below the forwards, so I run DK1 with both.</p>
 
 <h2>Why a park gets less than the average price</h2>
+<p>Say power costs 100 €/MWh on average over a year in DK1. A solar park would have earned about
+{100 * inputs[(inputs['case'] == 'DK1') & (inputs['tech'] == 'solar')]['capture_rate'].iloc[0]:.0f} € for each MWh it
+sold, and a wind farm about
+{100 * inputs[(inputs['case'] == 'DK1') & (inputs['tech'] == 'onshore')]['capture_rate'].iloc[0]:.0f} €. That share is
+the capture rate. The average counts every hour the same, but a park only sells in the hours it produces.</p>
+<div class="card"><b>An average day in DK1, the last 12 months</b>{day_chart}</div>
+<p>Solar produces in the middle of the day, when every solar park in Denmark and Germany produces at once, and that is
+when power is cheapest: about {profile['price'].iloc[11:16].mean():.0f} €/MWh from 11 to 16, against
+{profile['price'].iloc[17:22].mean():.0f} in the evening. Wind blows day and night, so over the day it doesn't stand out.
+It is cheap in a different way: when it is windy, it is windy at every wind farm at once.</p>
+<div class="card"><b>The price by how much was produced, DK1, the last 12 months</b>{bin_chart}<p class="note">The average price in
+hours when output was 0-10%, 10-20% and so on of the year's highest hour. The dotted line is the average over all hours.</p></div>
+<p>The more solar or wind there is in an hour, the lower the price. That is why the capture rate is below 100%, and why
+it falls as more of the same is built:</p>
 <div class="card"><b>Solar</b>{cap_charts['solar']}</div>
 <div class="card"><b>Onshore wind</b>{cap_charts['onshore']}</div>
 <p>The capture rate is the price a park actually got, weighted by when it produced, as a share of the average price. It
