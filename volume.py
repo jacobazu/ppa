@@ -3,8 +3,14 @@
 
 from pathlib import Path
 
+import matplotlib
 import numpy as np
 import pandas as pd
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+from areas import AREAS
 
 # kw at 3.0, 3.5, ..., 12.0 m/s, full power up to 22.5 m/s (open energy database turbine library, via windpowerlib)
 SPEED = np.arange(3.0, 12.5, 0.5)
@@ -33,4 +39,19 @@ summary = pd.DataFrame({c: {"std": years[c].std(), "p90": years[c].quantile(0.10
 Path("results").mkdir(exist_ok=True)
 years.round(4).to_csv("results/volume_years.csv")
 summary.round(4).to_csv("results/volume_summary.csv", index_label="case")
+
+fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)
+for ax, t in zip(axes, ["solar", "onshore"]):
+    for i, area in enumerate(AREAS):
+        ax.plot(years.index, 100 * (years[f"{area}_{t}"] - 1), lw=1.2, color=f"C{i}", label=area)
+    ax.axhline(0, color="#888888", lw=0.8)
+    ax.set_title(t)
+    ax.spines[["top", "right"]].set_visible(False)
+axes[0].set_ylabel("% more or less than an average year")
+axes[-1].legend(frameon=False, loc="upper left", bbox_to_anchor=(1, 1))
+fig.suptitle(f"Production in each weather year, {years.index.min()}-{years.index.max()}")
+fig.tight_layout()
+Path("charts").mkdir(exist_ok=True)
+fig.savefig("charts/volume.png", dpi=150)
+
 print(summary.round(3))
